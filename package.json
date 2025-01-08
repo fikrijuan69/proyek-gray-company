@@ -1,0 +1,58 @@
+{
+  "name": "dashboard-pln",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@heroicons/react": "^2.2.0",
+    "@react-leaflet/core": "^2.0.0",
+    "@types/d3": "^7.4.3",
+    "@types/leaflet": "^1.9.15",
+    "@types/react-table": "^7.7.20",
+    "axios": "^1.7.9",
+    "chart.js": "^4.4.7",
+    "chartjs-chart-geo": "^4.3.4",
+    "d3": "^7.9.0",
+    "flowbite": "^2.5.2",
+    "flowbite-react": "^0.10.2",
+    "leaflet": "^1.9.4",
+    "prop-types": "^15.8.1",
+    "react": "^18.3.1",
+    "react-chartjs-2": "^5.2.0",
+    "react-dom": "^18.3.1",
+    "react-hot-toast": "^2.4.1",
+    "react-icons": "^5.4.0",
+    "react-leaflet": "^3.2.0",
+    "react-router-dom": "^6.28.1",
+    "react-table": "^7.8.0",
+    "recharts": "^2.15.0",
+    "socket.io-client": "^4.8.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "@types/bun": "latest",
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
+    "@vitejs/plugin-react": "^4.3.4",
+    "@vitejs/plugin-react-swc": "^3.7.2",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.17.0",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.16",
+    "globals": "^15.14.0",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "vite": "^5.4.11"
+  },
+  "module": "index.ts",
+  "peerDependencies": {
+    "typescript": "^5.7.2"
+  }
+}

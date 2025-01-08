@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@media (orientation: portrait) {
+    /* Adjust form field width in portrait mode */
+    .form-field {
+      max-width: 100%; /* Adjust the field to take full width */
+    }
+
+    .form-container-portrait {
+        padding: 1rem;
+    }
+  }
+
+  
+.break {
+    max-width: 180px;  /* You can adjust this value */
+    word-wrap: break-word;
+}
+
+
+.leaflet-control-attribution.leaflet-control {
+    display: none;
+} 
+
+.bruh  .overflow-y-auto::-webkit-scrollbar {
+    display: none;
+  }
