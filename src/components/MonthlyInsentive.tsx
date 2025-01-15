@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { FiDownload } from 'react-icons/fi';
 import { AddForm, IncentiveDataForm } from '../components/molecules/AddInsentiveForm';
 import { EditForm } from '../components/molecules/EditInsentiveForm';
-import { ToastService } from '../components/molecules/Toast';
+import Toast from './atoms/Toasta';
 
 export interface IncentiveData {
   id: number;
   name: string;
   supervisor: string;
   totalInsentive: number;
-  promotionInsentive : number;
+  promotionInsentive: number;
   status: string;
 }
 
@@ -21,36 +21,35 @@ const MonthlyInsentive: React.FC = () => {
       name: 'John Doe',
       supervisor: 'Jane Smith',
       totalInsentive: 500,
-      promotionInsentive : 50,
+      promotionInsentive: 50,
       status: '✅',
     },
-    // Tambahkan data lainnya
+    // Add more data here
   ]);
-
   const [formVisible, setFormVisible] = useState<'add' | 'edit' | null>(null);
   const [editData, setEditData] = useState<IncentiveDataForm | null>(null);
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
 
-
   const handleEdit = (item: IncentiveDataForm) => {
-    setEditData(item); 
-    setFormVisible('edit');  
+    setEditData(item);
+    setFormVisible('edit');
   };
 
   const handleAddSubmit = async (newData: IncentiveDataForm) => {
     try {
-      await fetch('/api/incentives', {
+      await fetch('http://localhost:3002/api/v1/main/incentive', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newData),
       });
       setFormVisible(null);
-      ToastService.success('Berhasil menambahkan data!');
+      setToast({ message: 'Berhasil menambahkan data!', type: 'success' });
     } catch (error) {
-      ToastService.error('Gagal menambahkan data.');
+      setToast({ message: 'Gagal menambahkan data.', type: 'error' });
     }
   };
 
@@ -62,9 +61,9 @@ const MonthlyInsentive: React.FC = () => {
         body: JSON.stringify(updatedData),
       });
       setFormVisible(null);
-      ToastService.success('Berhasil mengedit data!');
+      setToast({ message: 'Berhasil mengedit data!', type: 'success' });
     } catch (error) {
-      ToastService.error('Gagal mengedit data.');
+      setToast({ message: 'Gagal mengedit data.', type: 'error' });
     }
   };
 
@@ -160,6 +159,9 @@ const MonthlyInsentive: React.FC = () => {
           />
         )}
       </div>
+
+      {/* Toasts */}
+      {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
     </div>
   );
 };

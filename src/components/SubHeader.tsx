@@ -28,7 +28,7 @@ const SubHeader: React.FC = () => {
   }, []);
 
   return (
-    <header className="w-full bg-neutral-100 px-6 py-4 flex justify-end">
+    <header className="w-full bg-neutral-100 px-6 py-4 flex justify-end z-50">
       {/* Dropdown Profile */}
       <div className="relative" ref={dropdownRef}>
         <button

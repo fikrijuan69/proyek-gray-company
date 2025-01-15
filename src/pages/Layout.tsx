@@ -1,6 +1,5 @@
 import { Outlet } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
-import { ToastProvider } from './../components/molecules/Toast';
 import SubHeader from '../components/SubHeader';
 
 function Layout() {
@@ -19,9 +18,7 @@ function Layout() {
       <div className="lg:ml-64 flex-grow lg:mt-[4rem]"> 
         <SubHeader/>
 
-        <ToastProvider>
           <Outlet />
-        </ToastProvider>
       </div>
 
       {/* Sidebar */}
