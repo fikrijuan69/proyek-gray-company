@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { FiDownload } from 'react-icons/fi';
 import { AddForm, IncentiveDataForm } from '../components/molecules/AddInsentiveForm';
-import { EditForm } from '../components/molecules/EditInsentiveForm';
 import Toast from './atoms/Toasta';
 
 export interface IncentiveData {
@@ -14,6 +13,19 @@ export interface IncentiveData {
 }
 
 const MonthlyInsentive: React.FC = () => {
+
+  const [showConfirm, setShowConfirm] = useState(false);
+
+  const handleConfirm = () => {
+    setShowConfirm(true); // Tutup dialog
+    // handleEdit(item); // Panggil fungsi edit
+  };
+
+  const handleConfirmYes = () => {
+    setShowConfirm(false); // Tutup dialog
+    // handleEdit(item); // Panggil fungsi edit
+  };
+
   const [search, setSearch] = useState('');
   const [data] = useState<IncentiveData[]>([
     {
@@ -27,17 +39,12 @@ const MonthlyInsentive: React.FC = () => {
     // Add more data here
   ]);
   const [formVisible, setFormVisible] = useState<'add' | 'edit' | null>(null);
-  const [editData, setEditData] = useState<IncentiveDataForm | null>(null);
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
 
-  const handleEdit = (item: IncentiveDataForm) => {
-    setEditData(item);
-    setFormVisible('edit');
-  };
 
   const handleAddSubmit = async (newData: IncentiveDataForm) => {
     try {
@@ -50,20 +57,6 @@ const MonthlyInsentive: React.FC = () => {
       setToast({ message: 'Berhasil menambahkan data!', type: 'success' });
     } catch (error) {
       setToast({ message: 'Gagal menambahkan data.', type: 'error' });
-    }
-  };
-
-  const handleEditSubmit = async (updatedData: IncentiveDataForm) => {
-    try {
-      await fetch(`/api/incentives/${updatedData.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updatedData),
-      });
-      setFormVisible(null);
-      setToast({ message: 'Berhasil mengedit data!', type: 'success' });
-    } catch (error) {
-      setToast({ message: 'Gagal mengedit data.', type: 'error' });
     }
   };
 
@@ -124,7 +117,7 @@ const MonthlyInsentive: React.FC = () => {
                     <td className="border border-gray-300 px-4 py-2 text-sm text-center">
                       <div className="flex justify-center items-center gap-2">
                         <button
-                          onClick={() => handleEdit(item as any)}
+                          onClick={() => handleConfirm()}
                           className="bg-emerald-500 text-white px-4 py-2 rounded-md hover:bg-emerald-600"
                         >
                           Kirim
@@ -151,17 +144,35 @@ const MonthlyInsentive: React.FC = () => {
         {formVisible === 'add' && (
           <AddForm onSubmit={handleAddSubmit} onClose={() => setFormVisible(null)} />
         )}
-        {formVisible === 'edit' && editData && (
-          <EditForm
-            data={editData}
-            onSubmit={handleEditSubmit}
-            onClose={() => setFormVisible(null)}
-          />
-        )}
       </div>
 
       {/* Toasts */}
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
+
+
+              {/* Dialog Konfirmasi */}
+      {showConfirm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-md shadow-md text-center">
+            <p className="text-lg mb-4">Apakah Anda yakin?</p>
+            <div className="flex justify-center gap-4">
+              <button
+                onClick={handleConfirmYes}
+                className="bg-emerald-500 text-white px-4 py-2 rounded-md hover:bg-emerald-600"
+              >
+                Yes
+              </button>
+              <button
+                onClick={() => setShowConfirm(false)}
+                className="bg-gray-300 text-black px-4 py-2 rounded-md hover:bg-gray-400"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };
