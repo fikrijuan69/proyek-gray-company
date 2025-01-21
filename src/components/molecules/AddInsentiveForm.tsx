@@ -37,7 +37,7 @@ export const AddForm: React.FC<AddFormProps> = ({  onClose }) => {
     nilai_per_poin: 0,
   });
 
-  const apiUrl = 'http://localhost:3002/api/v1/main/incentive'; // Replace with your actual API URL
+  const apiUrl = 'http://103.196.155.16:3002/api/v1/main/incentive'; // Replace with your actual API URL
 
   const submitIncentiveData = async (data: IncentiveDataForm) => {
     try {

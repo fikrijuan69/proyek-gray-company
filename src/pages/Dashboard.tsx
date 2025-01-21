@@ -23,7 +23,7 @@ console.log(profilePic);
           "Authorization": `Bearer ${token}`,  // Menambahkan Bearer token
         };
 
-        const response = await fetch("http://localhost:3002/api/v1/user", {
+        const response = await fetch("http://103.196.155.16:3002/api/v1/user", {
           method: "GET",
           headers: headers,  
         });
@@ -85,7 +85,7 @@ console.log(profilePic);
         "Authorization": `Bearer ${token}`,  // Menambahkan Bearer token
       };
       
-      const response = await fetch("http://localhost:3002/api/v1/user", {
+      const response = await fetch("http://103.196.155.16:3002/api/v1/user", {
         method: "PUT",
         headers: headers,  
         body: form, 

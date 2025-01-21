@@ -28,7 +28,7 @@ export const EditForm: React.FC<EditFormProps> = ({ data, onClose }) => {
       try { 
 
         console.log(data);
-        const response = await fetch(`http://localhost:3002/api/v1/main/incentive/${data.id}`);
+        const response = await fetch(`http://103.196.155.16:3002/api/v1/main/incentive/${data.id}`);
         if (!response.ok) {
           throw new Error('Failed to fetch incentive data');
         }
@@ -75,7 +75,7 @@ export const EditForm: React.FC<EditFormProps> = ({ data, onClose }) => {
 
       console.log(sales_id);
 
-      const response = await fetch(`http://localhost:3002/api/v1/main/incentive/${sales_id}`, {
+      const response = await fetch(`http://103.196.155.16:3002/api/v1/main/incentive/${sales_id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

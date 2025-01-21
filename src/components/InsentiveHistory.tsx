@@ -29,7 +29,7 @@ const InsentiveHistory: React.FC = () => {
     const fetchIncentives = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:3002/api/v1/main/incentive/a/duh', {
+        const response = await fetch('http://103.196.155.16:3002/api/v1/main/incentive/a/duh', {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,
@@ -83,7 +83,7 @@ const InsentiveHistory: React.FC = () => {
 
     const sales_id = localStorage.getItem('sales_id')
 
-    const response = await fetch(`http://localhost:3002/api/v1/main/incentive/${sales_id}`, {
+    const response = await fetch(`http://103.196.155.16:3002/api/v1/main/incentive/${sales_id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

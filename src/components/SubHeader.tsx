@@ -27,7 +27,7 @@ const SubHeader: React.FC = () => {
       }
 
       try {
-        const response = await fetch('http://localhost:3002/api/v1/user', {
+        const response = await fetch('http://103.196.155.16:3002/api/v1/user', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

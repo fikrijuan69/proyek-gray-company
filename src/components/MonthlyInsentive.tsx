@@ -27,7 +27,7 @@ const MonthlyInsentive: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3002/api/v1/main/incentive');
+        const response = await fetch('http://103.196.155.16:3002/api/v1/main/incentive');
         let result: IncentiveDataResponse = await response.json();
 
         console.log(result);
@@ -42,7 +42,7 @@ const MonthlyInsentive: React.FC = () => {
 
   const handleAddSubmit = async (newData: IncentiveDataForm) => {
     try {
-      await fetch('http://localhost:3002/api/v1/main/incentive', {
+      await fetch('http://103.196.155.16:3002/api/v1/main/incentive', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newData),
@@ -64,7 +64,7 @@ const MonthlyInsentive: React.FC = () => {
 
     try {
       // Call the API to update the status
-      const response = await fetch(`http://localhost:3002/api/v1/main/incentive/status/${selectedId}`, {
+      const response = await fetch(`http://103.196.155.16:3002/api/v1/main/incentive/status/${selectedId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
       });

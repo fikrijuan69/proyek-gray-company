@@ -11,7 +11,7 @@ const ResetPassword: React.FC = () => {
     setLoading(true); // Set loading state
 
     try {
-      const response = await fetch('http://localhost:3002/api/v1/auth/reset-password', {
+      const response = await fetch('http://103.196.155.16:3002/api/v1/auth/reset-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

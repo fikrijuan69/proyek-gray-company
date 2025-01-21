@@ -25,7 +25,7 @@ const Sidebar: React.FC = () => {
 
       try {
         // Memanggil endpoint API untuk mendapatkan akses menu
-        const response = await axios.get('http://localhost:3002/api/access-menu', {
+        const response = await axios.get('http://103.196.155.16:3002/api/access-menu', {
           headers: { Authorization: `Bearer ${token}` },
         });
 
