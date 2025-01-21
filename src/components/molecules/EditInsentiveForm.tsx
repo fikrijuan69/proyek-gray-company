@@ -49,10 +49,11 @@ export const EditForm: React.FC<EditFormProps> = ({ data, onClose }) => {
     const modifiedFields: Partial<IncentiveDataForm> = {};
 
     for (const key in formData) {
-      if (formData[key as keyof IncentiveDataForm] !== initialData[key as keyof IncentiveDataForm]) {
-        modifiedFields[key as keyof IncentiveDataForm] = formData[key as keyof IncentiveDataForm];
+      if ((formData as any)[key] !== (initialData as any)[key]) {
+        (modifiedFields as any)[key] = (formData as any)[key];
       }
     }
+    console.log("lol");
 
     return modifiedFields;
   };

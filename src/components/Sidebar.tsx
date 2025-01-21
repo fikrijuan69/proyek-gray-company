@@ -12,7 +12,7 @@ const Sidebar: React.FC = () => {
     { label: 'Insentive', href: 'insentive', icon: <FaChartBar />, accessKey: 'insentive' },
     { label: 'Sales', href: 'sales', icon: <MdOutlinePointOfSale />, accessKey: 'sales' },
     { label: 'Notifications', href: 'notifications', icon: <FaBell />, accessKey: 'notifications' },
-    { label: 'Accounts', href: 'accounts', icon: <FaUsers />, accessKey: 'accounts' },
+    // { label: 'Accounts', href: 'accounts', icon: <FaUsers />, accessKey: 'accounts' },
   ];
 
   useEffect(() => {

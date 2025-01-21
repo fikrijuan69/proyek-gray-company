@@ -7,8 +7,8 @@ export interface IncentiveDataResponse {
   result: IncentiveData[];
 }
 
-
 export interface IncentiveData {
+  id: string; // Add id to the interface
   nama: string | null;
   supervisor: string | null | undefined;
   totalInsentif: number;
@@ -21,6 +21,7 @@ const MonthlyInsentive: React.FC = () => {
   const [formVisible, setFormVisible] = useState<'add' | 'edit' | null>(null);
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [selectedId, setSelectedId] = useState<string | null>(null); // Track the selected id for confirmation
 
   // Fetch data from API on component mount
   useEffect(() => {
@@ -28,6 +29,8 @@ const MonthlyInsentive: React.FC = () => {
       try {
         const response = await fetch('http://localhost:3002/api/v1/main/incentive');
         let result: IncentiveDataResponse = await response.json();
+
+        console.log(result);
         setData(result.result);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -51,12 +54,40 @@ const MonthlyInsentive: React.FC = () => {
     }
   };
 
-  const handleConfirm = () => {
-    setShowConfirm(true);
+  const handleConfirm = (id: string) => {
+    setSelectedId(id); // Set the selected id
+    setShowConfirm(true); // Show the confirmation dialog
   };
 
-  const handleConfirmYes = () => {
-    setShowConfirm(false);
+  const handleConfirmYes = async () => {
+    if (!selectedId) return;
+
+    try {
+      // Call the API to update the status
+      const response = await fetch(`http://localhost:3002/api/v1/main/incentive/status/${selectedId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update status');
+      }
+
+      // Update the status in the UI
+      setData((prevData) =>
+        prevData.map((item) =>
+          item.id === selectedId ? { ...item, status: 'accepted' } : item
+        )
+      );
+
+      setToast({ message: 'Status berhasil diperbarui!', type: 'success' });
+    } catch (error) {
+      console.error('Error updating status:', error);
+      setToast({ message: 'Gagal memperbarui status.', type: 'error' });
+    } finally {
+      setShowConfirm(false); // Close the confirmation dialog
+      setSelectedId(null); // Reset the selected id
+    }
   };
 
   return (
@@ -97,13 +128,13 @@ const MonthlyInsentive: React.FC = () => {
                     <td className="border border-gray-300 px-4 py-2 text-sm text-center">{item.nama || '-'}</td>
                     <td className="border border-gray-300 px-4 py-2 text-sm text-center">{item.supervisor || '-'}</td>
                     <td className="border border-gray-300 px-4 py-2 text-sm text-center">{item.totalInsentif}</td>
-<td className="border border-gray-300 px-4 py-2 text-sm text-center">
-  {item.status === "accepted" ? '✅' : '❌'}
-</td>
+                    <td className="border border-gray-300 px-4 py-2 text-sm text-center">
+                      {item.status === 'success' ? '✅' : '❌'}
+                    </td>
                     <td className="border border-gray-300 px-4 py-2 text-sm text-center">
                       <div className="flex justify-center items-center gap-2">
                         <button
-                          onClick={() => handleConfirm()}
+                          onClick={() => handleConfirm(item.id)} // Pass the id to handleConfirm
                           className="bg-emerald-500 text-white px-4 py-2 rounded-md hover:bg-emerald-600"
                         >
                           Kirim

@@ -7,7 +7,7 @@ import './global.css'
 import Insentive from './pages/Insentive';
 import Notifications from './pages/Notifications';
 import Dashboard from './pages/Dashboard';
-import Accounts from './pages/Accounts';
+// import Accounts from './pages/Accounts';
 import Sales from './pages/Sales';
 import ResetPassword from './pages/ResetPassword';
 
@@ -21,7 +21,7 @@ root.render(
         <Route path="notifications" element={<Notifications />} />           
         <Route path="insentive" element={<Insentive />} />   
         <Route path="sales" element={<Sales />} />   
-        <Route path="accounts" element={<Accounts />} />   
+        {/* <Route path="accounts" element={<Accounts />} />    */}
       </Route>
 
       <Route path="/login" element={<Login />} />
