@@ -7,7 +7,7 @@ interface AddFormProps {
 }
 
 export interface IncentiveDataForm {
-  id: number;
+  id: string;
   nik: string;
   name: string;
   jabatan: string;
@@ -17,13 +17,13 @@ export interface IncentiveDataForm {
   t_do_dms: string;
    t_lunas_ar: string;
   nama_unit: string;
-  point: string;
-  nilai_per_poin: string;
+  poin: number;
+  nilai_per_poin: number;
 }
 
-export const AddForm: React.FC<AddFormProps> = ({ onSubmit, onClose }) => {
+export const AddForm: React.FC<AddFormProps> = ({  onClose }) => {
   const [formData, setFormData] = useState<IncentiveDataForm>({
-    id: Date.now(),
+    id: '',
     nik: '',
     name: '',
     jabatan: '',
@@ -33,14 +33,15 @@ export const AddForm: React.FC<AddFormProps> = ({ onSubmit, onClose }) => {
     t_do_dms: '',
      t_lunas_ar: '',
     nama_unit: '',
-    point: '',
-    nilai_per_poin: '',
+    poin: 0,
+    nilai_per_poin: 0,
   });
 
   const apiUrl = 'http://localhost:3002/api/v1/main/incentive'; // Replace with your actual API URL
 
   const submitIncentiveData = async (data: IncentiveDataForm) => {
     try {
+      console.log();
       const response = await axios.post(apiUrl, data);
       console.log('Data submitted successfully:', response.data);
       alert('Insentif berhasil disimpan!'); // Hardcoded success alert
@@ -54,6 +55,7 @@ export const AddForm: React.FC<AddFormProps> = ({ onSubmit, onClose }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      console.log(formData);
       await submitIncentiveData(formData);  // Submit to API
       onClose();  // Close form after submission
     } catch (error) {
@@ -153,8 +155,8 @@ export const AddForm: React.FC<AddFormProps> = ({ onSubmit, onClose }) => {
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700">Poin</label>
               <input
-                value={formData.point}
-                onChange={(e) => setFormData({ ...formData, point: e.target.value })}
+                value={formData.poin}
+                onChange={(e) => setFormData({ ...formData, poin: Number(e.target.value) })}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 placeholder="Poin"
               />
@@ -163,7 +165,7 @@ export const AddForm: React.FC<AddFormProps> = ({ onSubmit, onClose }) => {
               <label className="block text-sm font-medium text-gray-700">Nilai Per Poin</label>
               <input
                 value={formData.nilai_per_poin}
-                onChange={(e) => setFormData({ ...formData, nilai_per_poin: e.target.value })}
+                onChange={(e) => setFormData({ ...formData, nilai_per_poin: Number(e.target.value) })}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 placeholder="Nilai Per Poin"
               />

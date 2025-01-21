@@ -1,50 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FiDownload } from 'react-icons/fi';
 import { AddForm, IncentiveDataForm } from '../components/molecules/AddInsentiveForm';
 import Toast from './atoms/Toasta';
 
+export interface IncentiveDataResponse {
+  result: IncentiveData[];
+}
+
+
 export interface IncentiveData {
-  id: number;
-  name: string;
-  supervisor: string;
-  totalInsentive: number;
-  promotionInsentive: number;
-  status: string;
+  nama: string | null;
+  supervisor: string | null | undefined;
+  totalInsentif: number;
+  tInsentifPromotion: number;
+  status: string | null;
 }
 
 const MonthlyInsentive: React.FC = () => {
-
-  const [showConfirm, setShowConfirm] = useState(false);
-
-  const handleConfirm = () => {
-    setShowConfirm(true); // Tutup dialog
-    // handleEdit(item); // Panggil fungsi edit
-  };
-
-  const handleConfirmYes = () => {
-    setShowConfirm(false); // Tutup dialog
-    // handleEdit(item); // Panggil fungsi edit
-  };
-
-  const [search, setSearch] = useState('');
-  const [data] = useState<IncentiveData[]>([
-    {
-      id: 1,
-      name: 'John Doe',
-      supervisor: 'Jane Smith',
-      totalInsentive: 500,
-      promotionInsentive: 50,
-      status: '✅',
-    },
-    // Add more data here
-  ]);
+  const [data, setData] = useState<IncentiveData[]>([]);
   const [formVisible, setFormVisible] = useState<'add' | 'edit' | null>(null);
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+  const [showConfirm, setShowConfirm] = useState(false);
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
-  };
-
+  // Fetch data from API on component mount
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:3002/api/v1/main/incentive');
+        let result: IncentiveDataResponse = await response.json();
+        setData(result.result);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setToast({ message: 'Gagal memuat data insentif.', type: 'error' });
+      }
+    };
+    fetchData();
+  }, []);
 
   const handleAddSubmit = async (newData: IncentiveDataForm) => {
     try {
@@ -60,9 +51,13 @@ const MonthlyInsentive: React.FC = () => {
     }
   };
 
-  const filteredData = data.filter((item) =>
-    item.name.toLowerCase().includes(search.toLowerCase())
-  );
+  const handleConfirm = () => {
+    setShowConfirm(true);
+  };
+
+  const handleConfirmYes = () => {
+    setShowConfirm(false);
+  };
 
   return (
     <div className="bg-gray-100">
@@ -81,22 +76,12 @@ const MonthlyInsentive: React.FC = () => {
             </button>
           </div>
 
-          <div className="mb-6">
-            <input
-              type="text"
-              placeholder="Cari berdasarkan nama"
-              value={search}
-              onChange={handleSearchChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-            />
-          </div>
-
           {/* Table Wrapper */}
           <div className="overflow-x-auto">
             <table className="min-w-full table-auto border-collapse border border-gray-200">
               <thead>
                 <tr className="bg-gray-200">
-                  {['Nama', 'Supervisor', 'Total Insentif', 'T. Insentif Promotion', 'Status', 'Aksi'].map((header) => (
+                  {['Nama', 'Supervisor', 'Total Insentif', 'Status', 'Aksi'].map((header) => (
                     <th
                       key={header}
                       className="border border-gray-300 px-4 py-2 text-left text-sm whitespace-nowrap"
@@ -107,13 +92,14 @@ const MonthlyInsentive: React.FC = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredData.map((item, _) => (
-                  <tr key={item.id} className="hover:bg-gray-100">
-                    {[item.name, item.supervisor, item.totalInsentive, item.promotionInsentive, item.status].map((value, i) => (
-                      <td key={i} className="border border-gray-300 px-4 py-2 text-sm text-center">
-                        {value}
-                      </td>
-                    ))}
+                {data.map((item, idx) => (
+                  <tr key={idx} className="hover:bg-gray-100">
+                    <td className="border border-gray-300 px-4 py-2 text-sm text-center">{item.nama || '-'}</td>
+                    <td className="border border-gray-300 px-4 py-2 text-sm text-center">{item.supervisor || '-'}</td>
+                    <td className="border border-gray-300 px-4 py-2 text-sm text-center">{item.totalInsentif}</td>
+<td className="border border-gray-300 px-4 py-2 text-sm text-center">
+  {item.status === "accepted" ? '✅' : '❌'}
+</td>
                     <td className="border border-gray-300 px-4 py-2 text-sm text-center">
                       <div className="flex justify-center items-center gap-2">
                         <button
@@ -126,10 +112,10 @@ const MonthlyInsentive: React.FC = () => {
                     </td>
                   </tr>
                 ))}
-                {filteredData.length === 0 && (
+                {data.length === 0 && (
                   <tr>
                     <td
-                      colSpan={5}
+                      colSpan={6}
                       className="border border-gray-300 px-4 py-2 text-center text-gray-500"
                     >
                       Tidak ada data
@@ -149,8 +135,7 @@ const MonthlyInsentive: React.FC = () => {
       {/* Toasts */}
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
 
-
-              {/* Dialog Konfirmasi */}
+      {/* Dialog Konfirmasi */}
       {showConfirm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded-md shadow-md text-center">
@@ -172,7 +157,6 @@ const MonthlyInsentive: React.FC = () => {
           </div>
         </div>
       )}
-
     </div>
   );
 };

@@ -9,6 +9,7 @@ import Notifications from './pages/Notifications';
 import Dashboard from './pages/Dashboard';
 import Accounts from './pages/Accounts';
 import Sales from './pages/Sales';
+import ResetPassword from './pages/ResetPassword';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
@@ -24,6 +25,7 @@ root.render(
       </Route>
 
       <Route path="/login" element={<Login />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
 
     </Routes>
   </BrowserRouter>

@@ -16,7 +16,7 @@ console.log(profilePic);
     const fetchData = async () => {
       try {
 
-        const token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzM2Njg3NzIxLCJleHAiOjE3MzcyOTI1MjF9.s0h4l0Ym-GhbnQvs0HRCTiXPNT-VdLbbvPxotHppwEK_rcG7yOb70ofzjez5fBOZXjrs4giv4OIea7R3q28kWw";
+        const token = localStorage.getItem('token');
 
         const headers = {
           "Content-Type": "application/json",
@@ -79,7 +79,7 @@ console.log(profilePic);
       form.append("email", formData.email);
       form.append("password", formData.password);
 
-      const token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzM2Njg3NzIxLCJleHAiOjE3MzcyOTI1MjF9.s0h4l0Ym-GhbnQvs0HRCTiXPNT-VdLbbvPxotHppwEK_rcG7yOb70ofzjez5fBOZXjrs4giv4OIea7R3q28kWw";
+      const token = localStorage.getItem('token');
 
       const headers = {
         "Authorization": `Bearer ${token}`,  // Menambahkan Bearer token

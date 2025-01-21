@@ -14,7 +14,7 @@ interface Attachment {
 
 const HumanRightsAttachment: React.FC = () => {
     const [attachment, setAttachment] = useState<Attachment | null>(null);
-    const token = 'Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsInVzZXJuYW1lIjoiZ2lsYW5ncHJhdGFtYSIsInByb2plY3RfYXNzaWduZWRfaWQiOjEsImlhdCI6MTczNTMxMzgyMCwiZXhwIjoxNzM1OTE4NjIwfQ.GzGMtl3PCQoPgAxfItK2THN5e5Fpm-x7XCYDpsODkxvjD4kUe0MeE_3GRoxkh17CfZVoCL735RWdYIpn_5MLiQ'; // Ganti dengan token yang valid
+    const token = localStorage.getItem('token');
 
     // Fetch data saat komponen dimount
     useEffect(() => {
@@ -22,7 +22,7 @@ const HumanRightsAttachment: React.FC = () => {
             try {
                 const response = await fetch('https://alobro.my.id/api/v1/esg/human-rights-attachment?project_id=1', {
                     headers: {
-                        Authorization: token,
+                        Authorization: `Bearer ${token}`,
                     },
                 });
 
@@ -47,7 +47,7 @@ const HumanRightsAttachment: React.FC = () => {
             const response = await fetch(attachment.download_link, {
                 method: 'GET',
                 headers: {
-                    Authorization: token,
+                    Authorization: `Bearer ${token}`,
                 },
             });
 

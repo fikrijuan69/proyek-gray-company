@@ -6,11 +6,17 @@ function Layout() {
   return (
     <div className="flex flex-col lg:flex-row w-full">
       {/* Header */}
-      <header className="bg-teal-700 text-white p-4 fixed w-full z-30 top-0 left-0">
-        <div className="container flex items-start">
-          <h1 className="text-2xl font-semibold ml-6">Toyota</h1>
-        </div>
-      </header>
+      <header className="bg-teal-700 text-white px-3 fixed w-full z-30 top-0 left-0">
+  <div className="container flex items-center">
+    <img
+
+      src="https://ik.imagekit.io/eoeykxtr4/jd%20toyota%20logo.png?updatedAt=1737471415005"
+      alt="Logo Toyota"
+      className="ml-2 w-16 h-auto" // Menyesuaikan ukuran gambar
+    />
+  </div>
+</header>
+
 
 
       {/* Main Content */}

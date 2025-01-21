@@ -41,12 +41,17 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-200">
+    <div className="min-h-screen flex items-center justify-center bg-neutral-100">
       <div className="flex flex-col md:flex-row bg-white rounded-md shadow-lg w-full max-w-4xl overflow-hidden">
         {/* Left Section (Image Placeholder) */}
         <div className="hidden md:flex w-1/2 bg-gray-300 items-center justify-center">
-          <p className="text-gray-500">Gambar Placeholder</p>
-        </div>
+  <img
+    src="https://ik.imagekit.io/eoeykxtr4/WhatsApp%20Image%202025-01-21%20at%2020.30.52_44c5f833.jpg?updatedAt=1737466765024"
+    alt=""
+    className="w-full h-full object-cover"
+  />
+</div>
+
 
         {/* Right Section (Login Form) */}
         <div className="w-full md:w-1/2 p-8">
@@ -91,7 +96,7 @@ const Login: React.FC = () => {
           {/* Error Message */}
           {error && <p className="mt-4 text-red-500 text-center">{error}</p>}
           <div className="mt-4 text-center">
-            <a href="#" className="text-sm text-blue-500 hover:underline">
+            <a href="/reset-password" className="text-sm text-blue-500 hover:underline">
               Lupa Password?
             </a>
           </div>
